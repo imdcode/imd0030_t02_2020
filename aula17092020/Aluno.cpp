@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Aluno.hpp"
+#include "aluno.hpp"
 
 using namespace std;
 
@@ -15,8 +15,8 @@ Aluno::Aluno(string nome, int idade, double altura,
 	this->altura = altura;
 	this->matricula = matricula;
 	this->telefone = telefone;
-}
-*/
+}*/
+
 Aluno::Aluno(string nome, int idade, double altura, 
 		string matricula, string telefone):nome(nome),
 		idade(idade),altura(altura), matricula(matricula),

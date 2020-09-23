@@ -1,7 +1,7 @@
 #ifndef _TURMA_
 #define _TURMA_
 
-#include "Aluno.hpp"
+#include "aluno.hpp"
 
 #define CAPACIDADE_MAX 10 
 
@@ -12,6 +12,9 @@ private:
 	Aluno* alunos[CAPACIDADE_MAX];
 	int matriculados = 0;
 public:
+	Turma ();
+	Turma (string nome, string id);
+	~Turma();
 	string getNome();
 	void setNome(string nome);
 	string getId();
