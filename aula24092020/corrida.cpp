@@ -1,10 +1,14 @@
 #include "corrida.hpp"
 
-Corrida::Corrida(string titulo):titulo(titulo),concorrentes(0){}
+Corrida::Corrida(string titulo, int distancia):titulo(titulo), 
+		distancia(distancia),concorrentes(0){}
 Corrida::~Corrida(){}
 string 
 Corrida::getTitulo(){
 	return this->titulo;
+}
+int Corrida::getDistancia(){
+	return this->distancia;
 }
 int 
 Corrida::getTotalConcorrentes(){
@@ -36,7 +40,7 @@ void Corrida::start(){
 			//cout << this->sapos[i]->getId() << " dist=" 
 			//	<< this->sapos[i]->getDistancia() << " meta=" 
 			//	<< Sapo::getDistanciaDaCorrida() << endl;
-			if (this->sapos[i]->getDistancia()>Sapo::getDistanciaDaCorrida()) {
+			if (this->sapos[i]->getDistancia()>this->distancia) {
 				this->vencedor = sapos[i];
 				fim = true;
 				break;

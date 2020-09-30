@@ -17,10 +17,6 @@ Sapo::getDistancia(){
 	return this->distancia;
 }
 int 
-Sapo::getDistanciaDaCorrida(){
-	return distanciaDaCorrida;
-}
-int 
 Sapo::getPulos(){
 	return this->pulos;
 }

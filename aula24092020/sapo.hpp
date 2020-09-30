@@ -17,11 +17,11 @@ private:
 	std::random_device rd; 
 	std::default_random_engine gen; 
 	std::uniform_int_distribution<> dis;
-	static int distanciaDaCorrida; 
+	//static int distanciaDaCorrida; 
 public:
 	Sapo(string id, int max_salto);
 	~Sapo();
-	static int getDistanciaDaCorrida();
+	//static int getDistanciaDaCorrida();
 	string getId();
 	int getMaxSalto();
 	int getDistancia();
