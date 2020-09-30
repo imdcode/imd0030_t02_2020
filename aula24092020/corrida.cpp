@@ -10,6 +10,9 @@ int
 Corrida::getTotalConcorrentes(){
 	return this->concorrentes;
 }
+Sapo* Corrida::getVencedor(){
+	return this->vencedor;
+}
 void 
 Corrida::AddConcorrente(Sapo* novo){
 	if (this->concorrentes<MAX_SAPOS) {
@@ -25,17 +28,19 @@ Corrida::RemConcorrente(string id){
 }
 void Corrida::start(){
 	bool fim = false;
-
-	while(!fim) {
+	
+	do {
 		for (int i = 0; i < this->concorrentes; ++i)
 		{
 			this->sapos[i]->pular();
-			cout << this->sapos[i]->getId() << " dist=" 
-				<< this->sapos[i]->getDistancia() << " meta=" 
-				<< Sapo::getDistanciaDaCorrida() << endl;
+			//cout << this->sapos[i]->getId() << " dist=" 
+			//	<< this->sapos[i]->getDistancia() << " meta=" 
+			//	<< Sapo::getDistanciaDaCorrida() << endl;
 			if (this->sapos[i]->getDistancia()>Sapo::getDistanciaDaCorrida()) {
+				this->vencedor = sapos[i];
 				fim = true;
+				break;
 			}
 		}
-	}
+	} while(!fim);
 }

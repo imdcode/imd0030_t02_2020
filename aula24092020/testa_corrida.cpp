@@ -23,5 +23,15 @@ int main(int argc, char const *argv[])
 	gpbrasil.AddConcorrente(s4);
 
 	gpbrasil.start();
+
+	cout << gpbrasil.getVencedor()->getId() << " é o vencedor com "
+			<< gpbrasil.getVencedor()->getPulos() 
+			<< " pulos, alcançando uma distância de "
+			<< gpbrasil.getVencedor()->getDistancia() << endl;
+	cout << gpbrasil.getVencedor()->getId() << " é o cara!" << endl;
 	return 0;
 }
+
+
+
+
