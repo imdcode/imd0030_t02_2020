@@ -1,11 +1,17 @@
 #include "veiculo.hpp"
 
-Veiculo::Veiculo(){}
+Veiculo::Veiculo(){
+	cout << "Veiculo " << this->modelo << " construído." << endl;
+}
 Veiculo::Veiculo (string cor, string modelo, string ano,
 			string placa, string proprietario):
 			cor(cor),modelo(modelo),ano(ano),
-			placa(placa),proprietario(proprietario){}
-Veiculo::~Veiculo(){}
+			placa(placa),proprietario(proprietario){
+	cout << "Veiculo " << this->modelo << " construído." << endl;
+}
+Veiculo::~Veiculo(){
+	cout << "Veiculo " << this->modelo << " destruido." << endl;
+}
 string 
 Veiculo::getCor(){
 	return this->cor;

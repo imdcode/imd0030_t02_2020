@@ -11,7 +11,10 @@ class Carro : public Veiculo {
 private:
     double volumePortaMalas;
 public:
-	//Carro (double volumePortaMalas);
+	Carro (string cor, string modelo, string ano,
+			string placa, string proprietario,
+			double volumePortaMalas);
+	~Carro();
     double getVolumePortaMalas();
     void setVolumePortaMalas(double v);
     void ligar();

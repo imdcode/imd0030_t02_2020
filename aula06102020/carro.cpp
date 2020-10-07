@@ -1,6 +1,15 @@
 #include "carro.hpp"
 
-//Carro::Carro (volumePortaMalas(volumePortaMalas){}
+Carro::Carro (string cor, string modelo, string ano,
+			string placa, string proprietario,
+			double volumePortaMalas):
+			Veiculo(cor,modelo,ano,placa,proprietario),
+			volumePortaMalas(volumePortaMalas){
+	cout << "Carro " << this->modelo << " construído." << endl;
+}
+Carro::~Carro(){
+	cout << "Carro " << this->modelo << " destruido." << endl;
+}
 double 
 Carro::getVolumePortaMalas(){
 	return this->volumePortaMalas;
