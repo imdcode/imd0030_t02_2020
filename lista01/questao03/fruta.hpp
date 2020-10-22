@@ -14,8 +14,8 @@ private:
 	string validade;
 public:
 	// getters
-	string getDataLote();
-	string getValidade();
+	string getDataLote() const;
+	string getValidade() const;
 	// setters
 	void setDataLote(string data_lote);
 	void setValidade(string validade);

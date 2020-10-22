@@ -13,12 +13,12 @@ Fruta::Fruta(string codigo, string descricao, double preco,
 Fruta::~Fruta() {}
 
 string 
-Fruta::getDataLote() {
+Fruta::getDataLote() const {
 	return this->data_lote;
 }
 
 string 
-Fruta::getValidade() {
+Fruta::getValidade() const {
 	return this->validade;
 }
 

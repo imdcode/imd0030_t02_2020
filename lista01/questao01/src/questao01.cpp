@@ -61,6 +61,7 @@ Questao01::testar(){
 			new Funcionario("Stormfront",150000.00,date(1,8,1950),
 							date(4,9,2020)));
 
+
 	this->adicionaEmpresa(vought);
 	this->listarEmpresas();
 
@@ -85,6 +86,13 @@ Questao01::testar(){
 	cout << "Media de funcionarios por empresa: " 
 				<< Funcionario::getAtivos()/Empresa::getAtivas() << endl; 
 
+	Funcionario a("Fulano",150000.00,date(1,8,1950),
+							date(4,9,2020));
+	Funcionario b("Fulano",150000.00,date(1,8,1950),
+							date(4,9,2020));
+	if (a==b) {
+		cout << "Existem dois fulanos." << endl;
+	}
 }
 
 

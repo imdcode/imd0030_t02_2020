@@ -9,17 +9,17 @@ Produto::Produto(string codigo, string descricao, double preco):
 	cod_barras(codigo), descricao(descricao), preco(preco) {}
 
 string 
-Produto::getCodBarras() {
+Produto::getCodBarras() const {
 	return this->cod_barras;
 }
 	
 string 
-Produto::getDescricao() {
+Produto::getDescricao() const {
 	return this->descricao;
 }
 
 double 
-Produto::getPreco() {
+Produto::getPreco() const {
 	return this->preco;
 }
 	
@@ -40,4 +40,24 @@ Produto::setPreco(double preco) {
 
 ostream& operator<< (ostream &o, Produto const &p) {
 	return p.print(o);
+}
+double 
+Produto::operator+ (const Produto &outro) const {
+	return this->preco + outro.preco;
+}
+double 
+Produto::operator- (const Produto &outro) const {
+	return this->preco - outro.preco;
+} 
+double 
+Produto::operator+ (const double &valor) const {
+	return this->preco + valor;
+}
+double 
+Produto::operator- (const double &valor) const {
+	return this->preco - valor;
+} 
+bool 
+Produto::operator== (const Produto &outro) const {
+	return this->cod_barras == outro.cod_barras;
 }

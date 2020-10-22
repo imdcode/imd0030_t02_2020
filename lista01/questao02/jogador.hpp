@@ -23,12 +23,12 @@ public:
 	Jogador(string nome);
 	~Jogador();
 
-	void Jogar(Dado &d1, Dado &d2);
+	int Jogar(Dado &d1, Dado &d2);
 	bool podeJogar();
 
-	int getPontos();
-	string getNome();
-	StatusJogador getStatus();
+	int getPontos() const;
+	string getNome() const;
+	StatusJogador getStatus() const;
 
 	static int getAlvo();
 	

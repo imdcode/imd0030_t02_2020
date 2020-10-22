@@ -8,33 +8,28 @@ Jogador::Jogador(string nome):nome(nome),pontos(0),status(ATIVO){}
 
 Jogador::~Jogador(){}
 
-void 
+int  
 Jogador::Jogar(Dado &d1, Dado &d2){
 	int jogada = d1.jogar()+d2.jogar();
 	this->pontos+=jogada;
 	if (this->pontos> alvo){
-		this->status=EXCLUIDO;
-		std::cout << this->nome << " pontuou: " << jogada 
-			<< " e estourou os pontos (" << this->pontos << ") e foi EXCLUIDO." 
-			<< std::endl;
-	} else {
-		std::cout << this->nome << " pontuou: " << jogada 
-			<< " | total: " << this->pontos << std::endl;
+		this->status=EXCLUIDO;	
 	}
+	return jogada;
 }
 
 int 
-Jogador::getPontos(){
+Jogador::getPontos() const{
 	return this->pontos;
 }
 
 string 
-Jogador::getNome(){
+Jogador::getNome() const{
 	return this->nome;
 }
 
 StatusJogador 
-Jogador::getStatus(){
+Jogador::getStatus() const{
 	return this->status;
 }
 

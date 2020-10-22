@@ -21,6 +21,13 @@ Empresa::Empresa(const Empresa &copia){
 	this->nome = copia.nome;
 	this->cnpj = copia.cnpj;
 	//BUG: this->empregados = copia.empregados;
+	// Correção: adicionar cada elemento do vetor original 
+	//			no vetor copia. Nesse caso, utiliza o
+	//			construtor cópia da classe Funcionario.
+	for (const auto &empregado : copia.empregados) {
+        this->empregados.push_back(new Funcionario(*empregado));
+    }
+	
 	ativas++;
 	Debug("A empresa " << this->nome << " foi criada via cópia." << endl);
 }

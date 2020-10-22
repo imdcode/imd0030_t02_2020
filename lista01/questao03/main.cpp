@@ -36,5 +36,16 @@ int main(int argc, char const *argv[])
 		cout << *lista[i] << endl;	
 	}
 
+	cout << "Valor total: " << (*lista[16] + *lista[15]) << endl;
+	cout << "Camisa: " << *lista[15] + 50.55 << endl;
+
+	// Range-based for loop - C++11
+	double total = 0;
+	for (auto& prod: lista)
+	{
+		if (prod)
+			total = *prod + total;	
+	}
+	cout << "Total: " << total << endl;
 	return 0;
 }

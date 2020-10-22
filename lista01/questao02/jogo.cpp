@@ -18,7 +18,16 @@ Jogo::novaRodada(){
 			break;
 		}
 		if (this->jogadores[i]->podeJogar()){
-			this->jogadores[i]->Jogar(this->dado1, this->dado2);
+			int jogada = this->jogadores[i]->Jogar(this->dado1, this->dado2);
+			if (this->jogadores[i]->getStatus()==EXCLUIDO) {
+				std::cout << this->jogadores[i]->getNome() << " pontuou: " << jogada 
+						<< " e estourou os pontos (" << this->jogadores[i]->getPontos() << ") e foi EXCLUIDO." 
+						<< std::endl;
+			} else {
+				std::cout << this->jogadores[i]->getNome() << " pontuou: " << jogada 
+						<< " | total: " << this->jogadores[i]->getPontos() << std::endl;
+			}
+			
 			// Caso o jogado tenha alcancado o alvo, ja o declara vencedor
 			if (this->jogadores[i]->getPontos()==Jogador::getAlvo()){
 				this->vencedor = this->jogadores[i];
