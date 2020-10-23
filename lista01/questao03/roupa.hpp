@@ -31,7 +31,7 @@ private:
 public:
 	// getters
 	string getMarca();
-	TipoSexo getSexo();
+	TipoSexo getSexo(); 
 	TipoTamanho getTamanho();
 
 	// setters

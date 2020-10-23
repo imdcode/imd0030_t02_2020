@@ -26,8 +26,12 @@ public:
 	void setPreco(double preco);
 	
 	double operator+ (const Produto &outro) const;
+	//Fruta a,b; // a.preco = 5.50 | b.preco = 3.25
+	//a + b --> a.operator+(b) --> 8.75
 	double operator- (const Produto &outro) const; 
+	//a - b --> a.operator-(b) --> 2.25
 	double operator+ (const double &valor) const;
+	//a + 1.30 --> a.operator+(1.30) --> 6.80
 	double operator- (const double &valor) const;
 	bool operator== (const Produto &outro) const;
 	friend ostream& operator<< (ostream &o, Produto const &t);  

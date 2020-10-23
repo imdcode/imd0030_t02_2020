@@ -8,7 +8,7 @@ using std::endl;
 
 int main(int argc, char const *argv[])
 {
-	Produto* lista[20];
+	Produto* lista[20]; //upcasting
 	// Bebidas
 	lista[0] = new Bebida("002002003-01","Whisky Natu Nobles",32.50,18);
 	lista[1] = new Bebida("002002003-02","Cerv Rinikin pek c/6",17.50,5);

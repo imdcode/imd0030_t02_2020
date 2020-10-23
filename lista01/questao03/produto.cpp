@@ -61,3 +61,4 @@ bool
 Produto::operator== (const Produto &outro) const {
 	return this->cod_barras == outro.cod_barras;
 }
+

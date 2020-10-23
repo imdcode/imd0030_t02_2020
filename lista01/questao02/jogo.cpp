@@ -13,7 +13,8 @@ Jogo::novaRodada(){
 	for (int i = 0; i < this->total_jogadores; ++i)
 	{
 		// Caso seja o unico jogador no jogo, ja o declara vencedor
-		if (this->jogadores[i]->getStatus()!=EXCLUIDO && totalEmJogo()==1){
+		if (this->jogadores[i]->getStatus()!=EXCLUIDO 
+				&& totalEmJogo()==1){
 			this->vencedor = this->jogadores[i];
 			break;
 		}
@@ -40,14 +41,17 @@ Jogo::novaRodada(){
 	
 void 
 Jogo::run(){
-	while (this->vencedor==nullptr && totalEmJogo()>1 && getAtivos()>0){
+	while (this->vencedor==nullptr 
+			&& totalEmJogo()>1 
+			&& getAtivos()>0){
 		novaRodada();
 	}
 	// Caso exista mais de um jogador em jogo, mas todos decidiram parar na mesma rodada
 	int maior=0;
 	if (this->vencedor==nullptr){
 		for (int i = 0; i < this->total_jogadores; ++i){
-			if (this->jogadores[i]->getStatus()!=EXCLUIDO && this->jogadores[i]->getPontos()>maior){
+			if (this->jogadores[i]->getStatus()!=EXCLUIDO 
+					&& this->jogadores[i]->getPontos()>maior){
 				this->vencedor = this->jogadores[i];
 				maior = this->jogadores[i]->getPontos();
 			}
@@ -80,7 +84,8 @@ Jogo::totalEmJogo(){
 	int emjogo=0;
 	for (int i = 0; i < this->total_jogadores; ++i)
 	{
-		if (this->jogadores[i]->getStatus()==ATIVO || this->jogadores[i]->getStatus()==PARADO){
+		if (this->jogadores[i]->getStatus()==ATIVO || 
+			this->jogadores[i]->getStatus()==PARADO){
 			emjogo++;
 		}
 	}

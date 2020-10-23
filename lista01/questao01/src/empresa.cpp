@@ -24,6 +24,7 @@ Empresa::Empresa(const Empresa &copia){
 	// Correção: adicionar cada elemento do vetor original 
 	//			no vetor copia. Nesse caso, utiliza o
 	//			construtor cópia da classe Funcionario.
+	// rage-based for  - C++11
 	for (const auto &empregado : copia.empregados) {
         this->empregados.push_back(new Funcionario(*empregado));
     }
