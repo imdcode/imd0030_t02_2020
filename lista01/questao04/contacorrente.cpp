@@ -27,8 +27,10 @@ double ContaCorrente::getLimite() const{
 bool 
 ContaCorrente::processaMovimentacao(Movimentacao& transacao){
 	if (transacao.getTipo()==tipoCredito) {
+		// verificar o limite e ajustar o saldo de acordo
 		this->saldo += transacao.getValor();
 	} else if (transacao.getTipo()==tipoDebito) {
+		// verificar o limite e ajustar o saldo de acordo 
 		this->saldo -= transacao.getValor();
 	}
 	return true;

@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
 
 	for (int i = 0; i < 18; ++i)
 	{
-		cout << *lista[i] << endl;	
+		cout << *lista[i] << endl;
 	}
 
 	cout << "Valor total: " << (*lista[16] + *lista[15]) << endl;
@@ -43,8 +43,9 @@ int main(int argc, char const *argv[])
 	double total = 0;
 	for (auto& prod: lista)
 	{
-		if (prod)
-			total = *prod + total;	
+		if (prod){
+			total = *prod + total;		
+		}
 	}
 	cout << "Total: " << total << endl;
 	return 0;

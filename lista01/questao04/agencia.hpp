@@ -24,7 +24,8 @@ public:
 	bool deposito(string numero_conta, double valor);
 	bool saldo(string numero_conta) const;
 	bool extrato(string numero_conta) const;
-	bool tranferencia(string conta_origem, string conta_destino, double valor);
+	bool tranferencia(string conta_origem, string conta_destino, 
+					double valor);
 	void listaContas() const;
 private:
 	string nome;
