@@ -118,6 +118,7 @@ bool Agencia::saldo(string numero_conta) const{
             cout << "Limite autorizado: R$ " << conta->getLimite() << endl;
             cout << "Limite total disponível: R$ " << (conta->getSaldo()+conta->getLimite()) << endl;
             cout << endl;
+            break;
         }
     }
     return true;
@@ -198,7 +199,7 @@ int Agencia::menuPrincipal(){
                 if (this->listaContas()) {
                     cout << "Digite o número da conta: ";
                     cin >> n_conta;
-                    while (op = this->menuConta(n_conta) == 0){
+                    while ((op = this->menuConta(n_conta)) == 0){
                         cout << "Conta não encontrada" << endl
                         << "Digite o número da conta: " << endl;
                         cin >> n_conta;
