@@ -1,6 +1,7 @@
 #include "contacorrente.hpp"
 
 #include <iomanip>
+#include <iostream>
 
 using std::setfill;
 using std::setw;
@@ -8,42 +9,24 @@ using std::fixed;
 using std::setprecision;
 using std::left;
 using std::right;
+using std::cout;
+using std::endl;
+
+#ifdef DEBUG
+#define Debug(x) std::cout << x
+#else
+#define Debug(x) 
+#endif 
 
 ContaCorrente::ContaCorrente(string agencia, string numero, 
 			double saldo, tcTipo tipo, double limite):
-			agencia(agencia), numero(numero),
-			saldo(saldo), tipo(tipo), limite(limite) {}
+			Conta(agencia,numero,saldo,tipo), limite(limite) {}
 
 ContaCorrente::~ContaCorrente() {}
-
-string 
-ContaCorrente::getAgencia() const {
-	return this->agencia;
-}
-
-string 
-ContaCorrente::getNumero() const {
-	return this->numero;
-}
-
-double 
-ContaCorrente::getSaldo() const {
-	return this->saldo;
-}
-
-tcTipo 
-ContaCorrente::getTipo() const {
-	return this->tipo;
-}
 
 double 
 ContaCorrente::getLimite() const {
 	return this->limite;
-}
-
-vector<Movimentacao*> 
-ContaCorrente::getHistorico() const {
-	return this->historico;
 }
 
 bool ContaCorrente::processarMovimentacao(Movimentacao* nova){
@@ -61,17 +44,15 @@ bool ContaCorrente::processarMovimentacao(Movimentacao* nova){
 	return false;
 }
 
-ostream& operator<< (ostream& o, ContaCorrente& cc) {
-	o << setfill(' ') << setw(10) << cc.agencia
-		<< setfill(' ') << setw(10) << cc.numero
+ostream& 
+ContaCorrente::imprimeDados(ostream& o) const {
+	o << setfill(' ') << setw(10) << this->agencia
+		<< setfill(' ') << setw(10) << this->numero
+		<< setfill(' ') << setw(6) 
+		<< (this->tipo==tcNormal ? "CC.N" : "CC.E")
 		<< right << setfill(' ') << setw(15) 
-		<< fixed << setprecision(2) << cc.saldo
+		<< fixed << setprecision(2) << this->saldo
 		<< setfill(' ') << setw(15)
-		<< fixed << setprecision(2) << cc.limite;
+		<< fixed << setprecision(2) << this->limite;
 	return o;
-}
-
-bool 
-ContaCorrente::operator==(const ContaCorrente& outro) const {
-	return (this->numero == outro.numero);
 }

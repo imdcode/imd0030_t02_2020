@@ -1,6 +1,6 @@
 #pragma once
 
-#include "movimentacao.hpp"
+#include "conta.hpp"
 
 #include <vector>
 #include <ostream>
@@ -9,35 +9,19 @@ using std::string;
 using std::vector;
 using std::ostream;
 
-enum tcTipo
-{
-	tcNormal,
-	tcEspecial
-};
 
-class ContaCorrente {
+class ContaCorrente : public Conta {
 public:
 	ContaCorrente(string agencia, string numero, double saldo,
 			tcTipo tipo, double limite);
 	~ContaCorrente();
-	string getAgencia() const;
-	string getNumero() const;
-	double getSaldo() const;
-	tcTipo getTipo() const;
 	double getLimite() const;
-	vector<Movimentacao*> getHistorico() const;
 
 	bool processarMovimentacao(Movimentacao* nova);
 
-	bool operator==(const ContaCorrente& outro) const;
-
 	friend ostream& operator<< (ostream& o, ContaCorrente& cc);
+	ostream& imprimeDados(ostream& o) const;
 
 private:
-	string agencia;
-	string numero;
-	double saldo;
-	tcTipo tipo;
 	double limite;
-	vector<Movimentacao*> historico;
 };

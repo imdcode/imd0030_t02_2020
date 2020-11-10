@@ -17,11 +17,11 @@ void pausar() {
 }
 void limpaTela()
 {
-#if defined _WIN32
+#if defined (_WIN32) && !defined (DEBUG)
     system("cls");
-#elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
+#elif (defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)) && !defined (DEBUG)
     system("clear");
-#elif defined (__APPLE__)
+#elif defined (__APPLE__) && !defined (DEBUG)
     system("clear");
 #endif
 }
@@ -40,6 +40,8 @@ void menuPrincipal(Agencia* ag) {
 		cout<< endl << "T - Efetuar transferência entre contas.";
 		cout<< endl << "I - Imprimir saldo.";
 		cout<< endl << "E - Imprimir extrato.";
+		cout<< endl << "---------";
+		cout<< endl << "U - Atualizar poupanças.";
 		cout<< endl << "---------";
 		cout<< endl << endl << "X - Encerrar.";
 
@@ -75,6 +77,9 @@ void menuPrincipal(Agencia* ag) {
 			case 'E' :
 			case 'e' :{ ag->extrato();}
 			break;
+			case 'U' :
+			case 'u' :{ ag->atualizarPoupancas();}
+			break;
 			case 'X' :
 			case 'x' :{ return;}
 			break;
@@ -94,6 +99,8 @@ int main(int argc, char const *argv[])
 	Agencia* ag1 = new Agencia("Banco do Brasil","Agencia Central","3400-9");
 
 	menuPrincipal(ag1);
+
+	delete ag1;
 
 	return 0;
 }

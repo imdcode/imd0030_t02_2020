@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <iomanip>
+#include <limits>
 
 #include <cstring> // Para usar a função strspn()
 
@@ -17,11 +18,24 @@ using std::left;
 using std::right;
 using std::getline;
 
+#ifdef DEBUG
+#define Debug(x) std::cout << x
+#else
+#define Debug(x) 
+#endif
 
 Agencia::Agencia(string banco, string nome, string numero):
-		banco(banco), nome(nome), numero(numero) {}
+		banco(banco), nome(nome), numero(numero) {
+	Debug("Agência (" << this->numero << ") - [" << this << "] foi criada." << endl);
+}
 
-Agencia::~Agencia(){}
+Agencia::~Agencia(){
+	for (auto& conta : this->contas)
+	{
+		delete conta;
+	}
+	Debug("Agência (" << this->numero << ") - [" << this << "] foi destruída." << endl);
+}
 
 string 
 Agencia::getBanco() const {
@@ -38,7 +52,7 @@ Agencia::getNumero() const {
 	return this->numero;
 }
 
-vector<ContaCorrente*> 
+vector<Conta*> 
 Agencia::getContas() const {
 	return this->contas;
 }
@@ -50,8 +64,10 @@ Agencia::criarConta() {
 	string strTipo;
 	tcTipo cc_tipo;
 	double cc_limite;
+	double cc_taxa;
+	Conta* criada = nullptr;
 
-	this->printTitle("Criar Conta Corrente");
+	this->printTitle("Criar Conta",60);
 
 	cout << "Agencia: " << this->numero << endl;
 	
@@ -66,29 +82,48 @@ Agencia::criarConta() {
 		cout << "Conta já cadastrada." << endl;
 		return;
 	}
-
-	cc_saldo = leValor("Saldo: ");
 	
 	do {
-		cout << "Tipo (N - normal | E - especial): ";
+		cout << "Tipo (N - normal | E - especial | P - poupança): ";
 		cin >> strTipo;
 		if (strTipo!="N" && strTipo!="n" 
-			&& strTipo!="E" && strTipo!="e") {
+			&& strTipo!="E" && strTipo!="e"
+			&& strTipo!="P" && strTipo!="p") {
 			cout << "Opção inválida! Tente novamente." << endl;
 		}
 	} while (strTipo!="N" && strTipo!="n" 
-			&& strTipo!="E" && strTipo!="e");
+			&& strTipo!="E" && strTipo!="e"
+			&& strTipo!="P" && strTipo!="p");
 
-	cc_tipo = (strTipo=="N") ? tcNormal : tcEspecial;
+	cc_tipo = tcNormal; 
+	if (strTipo=="E" || strTipo=="e") {
+		cc_tipo = tcEspecial;
+	} else if (strTipo=="P" || strTipo=="p") {
+		cc_tipo = tcPoupanca;
+	} 
 
-	cc_limite = leValor("Limite: ");
+	cc_saldo = leValor("Saldo: ");
 
-	ContaCorrente* criada = new ContaCorrente(
-		this->numero,
-		cc_numero,
-		0,
-		cc_tipo,
-		cc_limite);
+	if (cc_tipo == tcEspecial || cc_tipo == tcNormal) {
+		cc_limite = leValor("Limite: ");
+
+		criada = new ContaCorrente(
+			this->numero,
+			cc_numero,
+			0,
+			cc_tipo,
+			cc_limite);
+	} else { // cc_tipo == tcPoupanca
+		cc_taxa = leValor("Rendimento (%): ");
+
+		criada = new ContaPoupanca(
+			this->numero,
+			cc_numero,
+			0,
+			cc_tipo,
+			cc_taxa);
+	}
+	
 	Movimentacao* mov = new Movimentacao(
 			"Abertura de conta.",
 			cc_saldo,tmCredito);
@@ -102,14 +137,14 @@ Agencia::criarConta() {
 }
 
 bool 
-Agencia::adicionarConta(ContaCorrente* nova) {
+Agencia::adicionarConta(Conta* nova) {
 	this->contas.push_back(nova);
 	return true;
 }
 
 void 
 Agencia::removeConta() {
-	this->printTitle("Remover Conta Corrente");
+	this->printTitle("Remover Conta",60);
 	string cc_numero;
 	do {
 		cout << "Numero da conta: ";
@@ -123,14 +158,14 @@ Agencia::removeConta() {
 	}
 }
 
-ContaCorrente* 
+Conta* 
 Agencia::removerConta(string numero) {
 	int index = 0;
 	for (auto& conta : this->contas)
 	{
 		if (conta->getNumero()==numero)
 		{
-			ContaCorrente* removido = conta;
+			Conta* removido = conta;
 			this->contas.erase(this->contas.begin()+index);
 			return removido;
 		}
@@ -141,7 +176,7 @@ Agencia::removerConta(string numero) {
 
 void 
 Agencia::saque() {
-	this->printTitle("Saque em Conta Corrente");
+	this->printTitle("Saque em Conta",60);
 	string cc_numero;
 	double cc_valor_saque;
 	do {
@@ -158,7 +193,7 @@ Agencia::saque() {
 
 bool 
 Agencia::saque(string numero, double valor) {
-	ContaCorrente* conta = this->findConta(numero);
+	Conta* conta = this->findConta(numero);
 	if (conta!=nullptr) {
 		Movimentacao* debito = new Movimentacao(
 			"Saque em conta.",
@@ -170,7 +205,7 @@ Agencia::saque(string numero, double valor) {
 
 void
 Agencia::deposito() {
-	this->printTitle("Depósito em Conta Corrente");
+	this->printTitle("Depósito em Conta",60);
 	string cc_numero;
 	double cc_valor_deposito;
 	do {
@@ -187,7 +222,7 @@ Agencia::deposito() {
 
 bool 
 Agencia::deposito(string numero, double valor) {
-	ContaCorrente* conta = this->findConta(numero);
+	Conta* conta = this->findConta(numero);
 	if (conta!=nullptr) {
 		Movimentacao* credito = new Movimentacao(
 			"Credito em conta.",
@@ -199,7 +234,7 @@ Agencia::deposito(string numero, double valor) {
 
 void 
 Agencia::saldo() {
-	this->printTitle("Saldo de Conta Corrente");
+	this->printTitle("Saldo de Conta",60);
 	string cc_numero;
 	do {
 		cout << "Numero da conta: ";
@@ -210,9 +245,9 @@ Agencia::saldo() {
 
 void 
 Agencia::imprimeSaldo(string numero) {
-	ContaCorrente* conta = this->findConta(numero);
+	Conta* conta = this->findConta(numero);
 	if (conta!=nullptr) {
-		cout << "Conta Corrente [" 
+		cout << "Conta [" 
 			<< conta->getNumero() << "]"
 			<< endl
 			<< "Saldo atual: "
@@ -222,7 +257,7 @@ Agencia::imprimeSaldo(string numero) {
 
 void 
 Agencia::extrato() {
-	this->printTitle("Extrato de Conta Corrente");
+	this->printTitle("Extrato de Conta",60);
 	string cc_numero;
 	do {
 		cout << "Numero da conta: ";
@@ -233,9 +268,9 @@ Agencia::extrato() {
 
 void 
 Agencia::imprimeExtrato(string numero) {
-	ContaCorrente* conta = this->findConta(numero);
+	Conta* conta = this->findConta(numero);
 	if (conta!=nullptr) {
-		cout << "Conta Corrente [" 
+		cout << "Conta [" 
 			<< conta->getNumero() << "]"
 			<< endl;
 		for (auto& mov : conta->getHistorico())
@@ -249,7 +284,7 @@ Agencia::imprimeExtrato(string numero) {
 
 void 
 Agencia::transferencia() {
-	this->printTitle("Transferência entre Contas");
+	this->printTitle("Transferência entre Contas",60);
 	string cc_origem;
 	do {
 		cout << "Numero da conta origem: ";
@@ -275,8 +310,8 @@ Agencia::transferencia() {
 bool 
 Agencia::transferencia(string cc_origem, string cc_destino, 
 		double valor) {
-	ContaCorrente* origem = this->findConta(cc_origem);
-	ContaCorrente* destino = this->findConta(cc_destino);
+	Conta* origem = this->findConta(cc_origem);
+	Conta* destino = this->findConta(cc_destino);
 
 	if (origem==nullptr || destino==nullptr) {
 		return false;
@@ -301,17 +336,18 @@ Agencia::transferencia(string cc_origem, string cc_destino,
 }
 
 void Agencia::listarContas() {
-	this->printTitle("Listagem de Contas");
+	this->printTitle("Listagem de Contas",60);
 		
 	if (this->contas.size()==0) {
 		cout << "Não há contas cadastradas." << endl;
 	} else {
 		cout << right << setfill(' ') << setw(10) << "Ag"
-			<< setfill(' ') << setw(10) << "CC"
+			<< setfill(' ') << setw(10) << "Conta"
+			<< setfill(' ') << setw(6) << "Tipo"
 			<< setfill(' ') << setw(15) 
 			<< fixed << setprecision(2) << "Saldo (R$)"
 			<< setfill(' ') << setw(15)
-			<< fixed << setprecision(2) << "Limite (R$)" << endl;
+			<< fixed << setprecision(2) << "Limite/Taxa" << endl;
 		for (auto& conta : this->contas)
 		{
 			cout << (*conta) << endl;
@@ -319,7 +355,7 @@ void Agencia::listarContas() {
 	}
 }
 
-ContaCorrente* 
+Conta* 
 Agencia::findConta(string numero) {
 	for (auto& conta : this->contas)
 	{
@@ -334,11 +370,14 @@ Agencia::findConta(string numero) {
 double 
 Agencia::leValor(string str_prompt) {
 	double val = 0.00;
-	string linha;
-	getline(cin, linha); // apenas para limpar a entrada
+	string linha; 
 	cout << str_prompt;
     while (getline(cin, linha))
     {
+    	// Para evitar o problema de buffer com o getline()
+    	if (linha.length() == 0) {
+    		getline(cin, linha);
+    	}
         std::stringstream ss(linha);
         if (ss >> val)
         {
@@ -347,8 +386,10 @@ Agencia::leValor(string str_prompt) {
                 break;
             }
         }
+        
         cout << "Valor inválido." << endl;
         cout << str_prompt;
+        //cin.ignore(256,'\n');
     }
     return val;
 }
@@ -401,15 +442,32 @@ Agencia::numeroValido(string numero) {
 }
 
 void 
-Agencia::printTitle(string title) {
-	int spaceTotal = 50;
-	int spaceOnLeft = (spaceTotal-title.length())/2;
+Agencia::printTitle(string title, int largura) {
+	int spaceOnLeft = (largura-title.length())/2;
 	int spaceExtra = title.length()%2;
-	cout << setfill('*') << setw(spaceTotal) << ""<< endl;
+	cout << setfill('*') << setw(largura) << ""<< endl;
 	cout << "**" 
 		<< setfill(' ') << setw(spaceOnLeft-2) << ""
 		<< title 
 		<< setfill(' ') << setw(spaceOnLeft-2+spaceExtra) << ""
 		<< "**" << endl;
-	cout << setfill('*') << setw(spaceTotal) << "" << endl;
+	cout << setfill('*') << setw(largura) << "" << endl;
+}
+
+bool 
+Agencia::atualizarPoupancas() {
+	this->printTitle("Atualização das Contas Poupança",60);
+	int count = 0;
+	for (auto& conta : this->contas)
+	{
+		if (conta->getTipo()==tcPoupanca) {
+			dynamic_cast<ContaPoupanca*> 
+				(conta)->atualizaSaldoNoAniversario();
+			count++;
+		}
+	}
+	cout << "Resumo... " << endl;
+	cout << "Total de contas: " << this->contas.size() << endl;
+	cout << "Contas poupança atualizadas: " << count << endl; 
+	return true;
 }

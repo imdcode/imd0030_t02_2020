@@ -1,6 +1,7 @@
 #include "movimentacao.hpp"
 
 #include <iomanip>
+#include <iostream>
 
 using std::setfill;
 using std::setw;
@@ -8,12 +9,24 @@ using std::fixed;
 using std::setprecision;
 using std::left;
 using std::right;
+using std::cout;
+using std::endl;
+
+#ifdef DEBUG
+#define Debug(x) std::cout << x
+#else
+#define Debug(x) 
+#endif 
 
 Movimentacao::Movimentacao(string descricao, double valor, 
 		tmTipo tipo):descricao(descricao),
-		valor(valor),tipo(tipo){}
+		valor(valor),tipo(tipo){
+	Debug("Movimentacao (" << (*this) << ") - [" << this << "] foi criada." << endl);
+}
 
-Movimentacao::~Movimentacao() {}
+Movimentacao::~Movimentacao() {
+	Debug("Movimentacao (" << (*this) << ") - [" << this << "] foi destruída." << endl);
+}
 
 string 
 Movimentacao::getDescricao() const {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "contacorrente.hpp"
+#include "contapoupanca.hpp"
 
 #include <vector>
 #include <string>
@@ -15,7 +16,7 @@ public:
 	string getBanco() const;
 	string getNome() const;
 	string getNumero() const;
-	vector<ContaCorrente*> getContas() const;
+	vector<Conta*> getContas() const;
 	
 	/** Métodos criados para ler dados do usuário.
 	*  	Esses métodos invocam os métodos internos
@@ -33,29 +34,30 @@ public:
 	/*
 	 * Métodos internos para realizar as operações.
 	 */
-	bool adicionarConta(ContaCorrente* nova);
-	ContaCorrente* removerConta(string numero);
+	bool adicionarConta(Conta* nova);
+	Conta* removerConta(string numero);
 	bool saque(string numero, double valor);
 	bool deposito(string numero, double valor);
 	void imprimeSaldo(string numero);
 	void imprimeExtrato(string numero);
 	bool transferencia(string cc_origem, string cc_destino, 
 			double valor);
+	bool atualizarPoupancas();
 	
 private:
 	/**
 	 * Método de busca de uma Conta Corrente pelo número.
 	 * Usado apenas internamente e, por isso, privado.
 	 */
-	ContaCorrente* findConta(string numero);
+	Conta* findConta(string numero);
 	double leValor(string str_prompt);
 	string leNumeroDaConta(string str_prompt);
 	bool numeroValido(string numero);
-	void printTitle(string title);
+	void printTitle(string title, int largura);
 
 private:
 	string banco;
 	string nome;
 	string numero;
-	vector<ContaCorrente*> contas;
+	vector<Conta*> contas;
 };

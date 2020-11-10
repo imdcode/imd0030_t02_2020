@@ -12,32 +12,33 @@ using std::ostream;
 enum tcTipo
 {
 	tcNormal,
-	tcEspecial
+	tcEspecial,
+	tcPoupanca
 };
 
-class ContaCorrente {
+class Conta {
 public:
-	ContaCorrente(string agencia, string numero, double saldo,
-			tcTipo tipo, double limite);
-	~ContaCorrente();
+	Conta(string agencia, string numero, double saldo,
+			tcTipo tipo);
+	virtual ~Conta();
 	string getAgencia() const;
 	string getNumero() const;
 	double getSaldo() const;
 	tcTipo getTipo() const;
-	double getLimite() const;
+
 	vector<Movimentacao*> getHistorico() const;
 
-	bool processarMovimentacao(Movimentacao* nova);
+	virtual bool processarMovimentacao(Movimentacao* nova) = 0;
+	virtual ostream& imprimeDados(ostream& o) const = 0;
 
-	bool operator==(const ContaCorrente& outro) const;
+	bool operator==(const Conta& outro) const;
 
-	friend ostream& operator<< (ostream& o, ContaCorrente& cc);
+	friend ostream& operator<< (ostream& o, Conta& cc);
 
-private:
+protected:
 	string agencia;
 	string numero;
 	double saldo;
 	tcTipo tipo;
-	double limite;
 	vector<Movimentacao*> historico;
 };
