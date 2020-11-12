@@ -91,9 +91,12 @@ void menuPrincipal(Agencia* ag) {
 int main(int argc, char const *argv[])
 {
 
-	Agencia* ag1 = new Agencia("Banco do Brasil","Agencia Central","3400-9");
+	Agencia* ag1 = new Agencia(
+		"Banco do Brasil","Agencia Central","3400-9");
 
 	menuPrincipal(ag1);
 
 	return 0;
 }
+
+

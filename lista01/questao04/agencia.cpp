@@ -112,8 +112,7 @@ Agencia::removeConta() {
 	this->printTitle("Remover Conta Corrente");
 	string cc_numero;
 	do {
-		cout << "Numero da conta: ";
-		cin >> cc_numero;
+		cc_numero = leNumeroDaConta("Numero da conta: ");
 	} while (this->findConta(cc_numero)==nullptr);
 
 	if (this->removerConta(cc_numero)) {
@@ -145,10 +144,11 @@ Agencia::saque() {
 	string cc_numero;
 	double cc_valor_saque;
 	do {
-		cout << "Numero da conta: ";
-		cin >> cc_numero;
+		cc_numero = leNumeroDaConta("Numero da conta: ");
 	} while (this->findConta(cc_numero)==nullptr);
+
 	cc_valor_saque = leValor("Valor: ");
+
 	if (this->saque(cc_numero,cc_valor_saque)) {
 		cout << "Operação realizada com sucesso." << endl;
 	} else {
@@ -174,10 +174,11 @@ Agencia::deposito() {
 	string cc_numero;
 	double cc_valor_deposito;
 	do {
-		cout << "Numero da conta: ";
-		cin >> cc_numero;
+		cc_numero = leNumeroDaConta("Numero da conta: ");
 	} while (this->findConta(cc_numero)==nullptr);
+
 	cc_valor_deposito = leValor("Valor: ");
+
 	if (this->deposito(cc_numero,cc_valor_deposito)) {
 		cout << "Operação realizada com sucesso." << endl;
 	} else {
@@ -202,9 +203,9 @@ Agencia::saldo() {
 	this->printTitle("Saldo de Conta Corrente");
 	string cc_numero;
 	do {
-		cout << "Numero da conta: ";
-		cin >> cc_numero;
+		cc_numero = leNumeroDaConta("Numero da conta: ");
 	} while (this->findConta(cc_numero)==nullptr);
+
 	this->imprimeSaldo(cc_numero);
 }
 
@@ -225,9 +226,9 @@ Agencia::extrato() {
 	this->printTitle("Extrato de Conta Corrente");
 	string cc_numero;
 	do {
-		cout << "Numero da conta: ";
-		cin >> cc_numero;
+		cc_numero = leNumeroDaConta("Numero da conta: ");
 	} while (this->findConta(cc_numero)==nullptr);
+
 	this->imprimeExtrato(cc_numero);
 }
 
@@ -252,14 +253,12 @@ Agencia::transferencia() {
 	this->printTitle("Transferência entre Contas");
 	string cc_origem;
 	do {
-		cout << "Numero da conta origem: ";
-		cin >> cc_origem;
+		cc_origem = leNumeroDaConta("Numero da conta origem: ");
 	} while (this->findConta(cc_origem)==nullptr);
 
 	string cc_destino;
 	do {
-		cout << "Numero da conta destino: ";
-		cin >> cc_destino;
+		cc_destino = leNumeroDaConta("Numero da conta destino: ");
 	} while (this->findConta(cc_destino)==nullptr);
 	
 	double cc_valor_transferencia;
