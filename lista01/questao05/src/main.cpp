@@ -7,13 +7,9 @@ using std::cin;
 using std::endl;
 
 void pausar() {
-#if defined _WIN32
-    system("pause");
-#elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
-    system("read -n 1 -s -p \"Pressione qualquer tecla para continuar...\"");
-#elif defined (__APPLE__)
-    system("read -n 1 -s -p \"Pressione qualquer tecla para continuar...\"");
-#endif
+	cout << "Pressione qualquer tecla para continuar...";
+	cin.get();
+	cin.ignore();
 }
 void limpaTela()
 {

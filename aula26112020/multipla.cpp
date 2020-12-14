@@ -10,7 +10,13 @@ enum tpAnimal
 	mamiferoExotico,
 	mamiferoNativo //...
 };
-
+/**
+ * @brief Classe animal usada para representar 
+ * 		um animal genérico.
+ * @details [long description]
+ * @param attrA Atributo único dessa classe.
+ * @param tipo Define o tipo do animal.
+ */
 class animal
 {
 public:
@@ -67,6 +73,7 @@ int main(int argc, char const *argv[])
 {
 	// Declara um vetor de animais
 	vector<shared_ptr<animal>> animais;
+
 	// Upcast: insere um anfibioexotico no vetor de animais
 	animais.push_back(make_shared<anfibioexotico>(1,2,3,4)); 
 	// Downcast usando pronteiros inteligentes

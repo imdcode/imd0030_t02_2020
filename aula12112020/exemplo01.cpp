@@ -43,7 +43,9 @@ void nadaAFazer2(Teste&) {}
 
 void nadaAFazer3(Teste*) {}
 
-void nadaAFazer4(shared_ptr<Teste>) {}
+void nadaAFazer4(shared_ptr<Teste> x) {
+	cout << "nadaAFazer4: " << (*x).getNome() << endl;
+}
 
 void TesteVector()
 {
